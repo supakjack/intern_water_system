@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Global_model extends CI_Model
 {
-
     public function select($table_name, $where_conditions = [])
     {
         foreach ($where_conditions as $where_condition) {

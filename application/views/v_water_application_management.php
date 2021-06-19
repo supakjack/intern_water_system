@@ -1,17 +1,19 @@
-<h1> <?= $title ?> </h1>
 <!-- start table user -->
-<table class="table">
+<table id="table_water_application_management" class="table display" style="width:100%">
     <thead>
         <tr>
-            <th scope="col">id</th>
-            <th scope="col">username</th>
-            <th scope="col">password</th>
-            <th scope="col">status</th>
+            <th>ผู้ลงทะเบียน</th>
+            <th>วันที่ลงทะเบียน</th>
+            <th>สถานะ</th>
         </tr>
     </thead>
-    <tbody class="append_water_applications">
-        <!-- append area -->
-    </tbody>
+    <tfoot>
+        <tr>
+            <th>ผู้ลงทะเบียน</th>
+            <th>วันที่ลงทะเบียน</th>
+            <th>สถานะ</th>
+        </tr>
+    </tfoot>
 </table>
 <!-- end table user -->
 <script>
@@ -21,17 +23,28 @@
             "method": "POST",
         };
         $.ajax(settings).done(function(response) {
-            response.data.result.map(water_application => {
-                console.log(water_application);
-                $('.append_water_applications').append(`
-                <tr>
-                    <th scope="row">${ water_application.water_application_id  }</th>
-                    <td>${ water_application.water_application_water_applicationname}</td>
-                    <td>${ water_application.water_application_password}</td>
-                    <td>${ water_application.water_application_status}</td>
-                </tr>
-                `);
-            })
+            console.log(response);
+        });
+        $(document).ready(function() {
+            $('#table_water_application_management').DataTable({
+                pageLength: 10,
+                serverSide: true,
+                processing: true,
+                "ajax": {
+                    url: "http://localhost/www/intern_water_system/index.php/Water_applications/find_with_page",
+                    type : 'POST'
+                },
+                "columns": [{
+                        "data": "name"
+                    },
+                    {
+                        "data": "create_date"
+                    },
+                    {
+                        "data": "status"
+                    }
+                ]
+            });
         });
     });
 </script>

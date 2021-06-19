@@ -1,4 +1,3 @@
-<h1> <?= $title ?> </h1>
 <!-- start form -->
 <form id="water_application_form">
     <div class="mb-3">
@@ -8,6 +7,21 @@
     <div class="mb-3">
         <label for="water_application_lastname" class="form-label">water_application_lastname</label>
         <input name="water_application_lastname" type="text" class="form-control" id="water_application_lastname">
+    </div>
+    <div class="mb-3">
+        <label for="water_application_telephone" class="form-label">water_application_telephone</label>
+        <input name="water_application_telephone" type="text" class="form-control" id="water_application_telephone">
+    </div>
+    <div class="mb-3">
+        <label for="water_application_district" class="form-label">water_application_district</label>
+        <select name="water_application_district" id="water_application_district" class="form-select" aria-label="Default select example">
+            <option selected value="1">เขต 1 (กทม.)</option>
+            <option value="2">เขต 2 (ชลบุรี)</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="water_application_address" class="form-label">water_application_address</label>
+        <textarea name="water_application_address" class="form-control" id="water_application_address" rows="3"></textarea>
     </div>
     <div class="mb-3">
         <label for="water_application_350_ml" class="form-label">water_application_350_ml</label>
@@ -28,17 +42,6 @@
     <div class="mb-3">
         <label for="water_application_20_l" class="form-label">water_application_20_l</label>
         <input name="water_application_20_l" type="number" class="form-control" id="water_application_20_l">
-    </div>
-    <div class="mb-3">
-        <label for="water_application_district" class="form-label">water_application_district</label>
-        <select name="water_application_district" id="water_application_district" class="form-select" aria-label="Default select example">
-            <option selected value="1">เขต 1 (กทม.)</option>
-            <option value="2">เขต 2 (ชลบุรี)</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="water_application_description" class="form-label">water_application_description</label>
-        <textarea name="water_application_description" class="form-control" id="water_application_description" rows="3"></textarea>
     </div>
     <button class="btn btn-primary" id="water_application_form_submit">บันทึก</button>
 </form>

@@ -14,12 +14,17 @@
 
     <!-- jQuery Core 3.6.0 min -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Hello, world!</title>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+
+    <title><?= empty($page_title) ? 'ระบบคลังน้ำ' : $page_title ?></title>
 </head>
 
 <script>
     function objectifyForm(formArray) {
-        //serialize data function
         var returnArray = {};
         for (var i = 0; i < formArray.length; i++) {
             returnArray[formArray[i]['name']] = formArray[i]['value'];

@@ -45,7 +45,7 @@ class Pages extends CI_Controller
     public function water_application()
     {
         $this->output('v_water_application', [
-            "title" => "ลงทะเบียนขอรับน้ำดื่ม"
+            "page_title" => "ลงทะเบียนขอรับน้ำดื่ม"
         ]);
     }
 
@@ -59,7 +59,7 @@ class Pages extends CI_Controller
     public function water_application_management()
     {
         $this->output('v_water_application_management', [
-            "title" => "Water Application Management"
+            "page_title" => "จัดการลงทะเบียนขอรับน้ำดื่ม"
         ]);
     }
 }

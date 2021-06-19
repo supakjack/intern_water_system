@@ -19,10 +19,13 @@ class Users extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->config->load('server_config');
         $this->load->database();
         $this->load->model('Global_model');
-        $this->load->helper('ajax_helper');
         $this->load->library('bcrypt');
+        header('Access-Control-Allow-Origin: ' . $this->config->item('cors_url'));
+        header('Access-Control-Allow-Headers: ' . $this->config->item('cors_url'));
+        header('Access-Control-Allow-Methods: GET, POST');
     }
 
     /*get users data
@@ -34,7 +37,9 @@ class Users extends CI_Controller
 	*/
     public function get_user()
     {
-        response_ajax($this->Global_model->select('users')->result());
+        $this->output->set_content_type('application/json')->set_output(json_encode([
+            'data' => ['result' => $this->Global_model->select('users')->result()]
+        ]));
     }
 
     /*add users data
@@ -48,7 +53,9 @@ class Users extends CI_Controller
     {
         $data = $this->input->post();
         $data['user_password'] = $this->bcrypt->hash_password($data['user_password']);
-        response_ajax($this->Global_model->insert('users', $data));
+        $this->output->set_content_type('application/json')->set_output(json_encode([
+            'data' => ['result' => $this->Global_model->insert('users', $data)]
+        ]));
     }
 
     /*update users data
@@ -62,7 +69,9 @@ class Users extends CI_Controller
     {
         $data = $this->input->post();
         $data['user_password'] = $this->bcrypt->hash_password($data['user_password']);
-        response_ajax($this->Global_model->update('users',  $data, [$this->input->get()]));
+        $this->output->set_content_type('application/json')->set_output(json_encode([
+            'data' => ['result' => $this->Global_model->update('users',  $data, [$this->input->get()])]
+        ]));
     }
 
     /*login to system
@@ -74,14 +83,20 @@ class Users extends CI_Controller
 	*/
     public function login_user()
     {
-        $select_user = $this->Global_model->select('users', [['user_username' => $this->input->post('user_username')]])->result()[0];
-
-        if ($this->bcrypt->check_password($this->input->post('user_password'), $select_user->user_password)) {
-            unset($select_user->user_password);
-            $this->session->set_userdata('user', $select_user);
-            response_ajax($this->session);
+        $select_user = $this->Global_model->select('users', [['user_username' => $this->input->post('user_username')]])->result();
+        if (COUNT($select_user) != 0) {
+            $select_user = $select_user[0];
+            if ($this->bcrypt->check_password($this->input->post('user_password'), $select_user->user_password)) {
+                unset($select_user->user_password);
+                $this->session->set_userdata('user', $select_user);
+                $this->output->set_content_type('application/json')->set_output(json_encode([
+                    'data' => ['result' => $this->session]
+                ]));
+            }
         } else {
-            response_ajax("Not found");
+            $this->output->set_content_type('application/json')->set_output(json_encode([
+                'data' => ['result' => "Not found"]
+            ]));
         }
     }
 
@@ -95,7 +110,9 @@ class Users extends CI_Controller
     public function logout_user()
     {
         $this->session->sess_destroy();
-        response_ajax($this->session->userdata('user'));
+        $this->output->set_content_type('application/json')->set_output(json_encode([
+            'data' => ['result' => $this->session->userdata('user')]
+        ]));
     }
 }
 /* End of file Users.php */

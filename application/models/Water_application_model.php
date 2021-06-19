@@ -7,7 +7,7 @@ class Water_application_model extends CI_Model
 	public function find_with_page($param)
 	{
 		$keyword = $param['keyword'];
-		$this->db->select('CONCAT(water_application_firstname, " ", water_application_lastname) AS name , water_application_create_date AS create_date , water_application_pending_status AS status');
+		$this->db->select('water_application_id AS id , CONCAT(water_application_firstname, " ", water_application_lastname) AS name , water_application_create_date AS create_date , water_application_pending_status AS status');
 
 		$condition = "1=1";
 		if (!empty($keyword)) {
